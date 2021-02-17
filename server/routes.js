@@ -14,13 +14,12 @@ router.get('/', (req, res) => {
         });
         res.json(rows)
     });
-
 });
 
 router.post('/', async (req, res) => {
     try {
         if (!req.files) {
-            res.send({
+            res.send({  
                 status: false,
                 message: 'No file uploaded'
             });
@@ -45,7 +44,8 @@ router.post('/', async (req, res) => {
                 }
             });
         }
-    } catch (err) {
+    } 
+    catch (err) {
         res.status(500).send(err);
     }
 });
