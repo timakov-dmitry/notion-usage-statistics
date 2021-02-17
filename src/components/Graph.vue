@@ -35,8 +35,8 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import moment from 'moment';
+    const axios = require('axios').default;
 
     const gradients = [
         ['#222'],
@@ -79,9 +79,7 @@
             } catch (e) {
                 console.error(e)
             }
-
         }
-
     }
 </script>
 
