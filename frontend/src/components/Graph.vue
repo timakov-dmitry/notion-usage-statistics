@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h3>Количество созданных блоков</h3>
+        <h2>Number of created blocks</h2>
         <v-sparkline
+                :labels="labels"
+                :label-size="3"
                 :value="countBlocks"
                 :gradient="gradient"
                 :smooth="radius || false"
@@ -9,14 +11,15 @@
                 :line-width="width"
                 :stroke-linecap="lineCap"
                 :gradient-direction="gradientDirection"
-                :fill="fill"
                 :type="type"
                 :auto-line-width="autoLineWidth"
                 auto-draw
         >
         </v-sparkline>
-        <h3>Объем загруженных данных</h3>
+        <h2>Downloaded data volume</h2>
         <v-sparkline
+                :labels="labels"
+                :label-size="3"
                 :value="valueHistory"
                 :gradient="gradient"
                 :smooth="radius || false"
@@ -35,8 +38,8 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import moment from 'moment';
+    const axios = require('axios').default;
 
     const gradients = [
         ['#222'],
@@ -53,15 +56,17 @@
         props:['statisticsResult'],
         data: () => ({
             width: 2,
-            radius: 10,
+            radius: 4,
             padding: 8,
+            smooth:3,
             lineCap: 'round',
             gradient: gradients[5],
             countBlocks: [],
             valueHistory: [],
+            labels:[],
             gradientDirection: 'top',
             gradients,
-            fill: false,
+            fill: true,
             type: 'trend',
             autoLineWidth: false,
         }),
@@ -76,15 +81,26 @@
                 console.log(data);
                 this.countBlocks = data.map(record => record.count);
                 this.valueHistory = data.map(record => record.volume);
+                this.labels = data.map(record => moment.unix(record.ts).format("DD.MM")+'\n'+'('+record.count+')');
+                console.log(this.labels)
             } catch (e) {
                 console.error(e)
             }
-
         }
-
     }
 </script>
 
 <style scoped>
+
+h2 { color: #111; 
+    font-family: 'Open Sans Condensed', 
+    sans-serif; 
+    font-size: 25px; 
+    font-weight: 500; 
+    line-height: 48px; 
+    margin: 0 0 20px; 
+    padding: 0 30px; 
+    text-align: center; 
+    text-transform: uppercase; }
 
 </style>

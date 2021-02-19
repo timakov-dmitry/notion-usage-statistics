@@ -11,7 +11,7 @@ Vue.use(VueRouter);
 const routes = [
     { path: '/', component: Statistics },
     { path: '/upload', component: Upload },
-    { path: '/graph', component: Graph }
+    { path: '/graph', component: Graph },
 ];
 
 const router = new VueRouter({
