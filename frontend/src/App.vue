@@ -60,7 +60,7 @@
                                             <router-link to="/upload">Upload</router-link>
                                         </v-list-item-title>
                                     </v-list-item-content>
-                                </v-list-item>                 
+                                </v-list-item>
                             </v-list>
                         </v-sheet>
                     </v-col>
@@ -80,15 +80,15 @@
 </template>
 
 <script>
-    export default {
-        data: () => ({
-            statisticsResult: null,
-            links: [
-                'Statistics'
-            ],
-        }),
-        
-    }
+export default {
+  data: () => ({
+    statisticsResult: null,
+    links: [
+      'Statistics'
+    ]
+  })
+
+}
 </script>
 
 <style>

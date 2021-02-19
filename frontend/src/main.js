@@ -6,22 +6,22 @@ import Statistics from '@/components/Statistics'
 import Graph from '@/components/Graph'
 import Upload from '@/components/Upload'
 
-Vue.use(VueRouter);
+Vue.use(VueRouter)
 
 const routes = [
-    { path: '/', component: Statistics },
-    { path: '/upload', component: Upload },
-    { path: '/graph', component: Graph },
-];
+  { path: '/', component: Statistics },
+  { path: '/upload', component: Upload },
+  { path: '/graph', component: Graph }
+]
 
 const router = new VueRouter({
-    routes // short for `routes: routes`
-});
+  routes // short for `routes: routes`
+})
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
-    router,
-    vuetify,
-    render: h => h(App),
-}).$mount('#app');
+  router,
+  vuetify,
+  render: h => h(App)
+}).$mount('#app')
