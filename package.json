@@ -17,6 +17,7 @@
     "moment": "^2.29.1",
     "sqlite3": "^5.0.1",
     "vue": "^2.6.11",
+    "vue-plotly": "^1.1.0",
     "vue-router": "^3.5.1"
   },
   "devDependencies": {
