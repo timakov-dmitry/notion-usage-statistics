@@ -3,6 +3,7 @@ node_modules
 /dist
 server/public
 server/store.db
+frontend/dist
 
 # local env files
 .env.local
@@ -22,3 +23,4 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+backend/store.db
