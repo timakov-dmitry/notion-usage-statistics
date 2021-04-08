@@ -2,7 +2,7 @@ const moment = require('moment');
 const axios = require('axios').default;
 // import config from '../../config';
 const config = {
-    BACKEND_URL: 'http://localhost:3000'
+    BACKEND_URL: ''
 }
 
 const state = {
