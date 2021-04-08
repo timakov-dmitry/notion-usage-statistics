@@ -3,7 +3,7 @@ const db = new sqlite3.Database('./store.db')
 const fs = require('fs')
 
 db.serialize(function () {
-  db.run('CREATE TABLE IF NOT EXISTS history (count INTEGER, date TEXT, volume INTEGER)')
+  db.run('CREATE TABLE IF NOT EXISTS history (count INTEGER, date TEXT, volume INTEGER, elements INTEGER)')
 })
 
 const isHistoryExists = (date) => {
@@ -17,7 +17,7 @@ const isHistoryExists = (date) => {
 
 const insertHistory = (date, volume, count, filePath) => {
   return new Promise((resolve, reject) => {
-    db.all(`INSERT INTO history (count, date, volume) VALUES( ${count}, "${date}", ${volume})`, [], (err) => {
+    db.all(`INSERT INTO history (count, date, volume, elements) VALUES( ${count}, "${date}", ${volume}, ${elements})`, [], (err) => {
       if (err) reject(err)
       fs.unlinkSync(filePath)
       resolve()
@@ -27,7 +27,7 @@ const insertHistory = (date, volume, count, filePath) => {
 
 const getHistory = () => {
   return new Promise((resolve, reject) => {
-    db.all('SELECT count, date, volume FROM history', [], (err, rows) => {
+    db.all('SELECT count, date, volume, elements FROM history', [], (err, rows) => {
       if (err) reject(err)
       resolve(rows)
     })

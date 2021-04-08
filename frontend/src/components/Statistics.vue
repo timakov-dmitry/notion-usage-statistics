@@ -1,7 +1,8 @@
 <template>
     <div>
         <h1>Block usage statistics</h1>
-        <p>Amount of elements: <strong>{{ count }}</strong> blocks</p>
+        <p>Amount of created pages: <strong>{{ count }}</strong></p>
+        <p>Amount of created text blocks: <strong>{{ elements }}</strong></p>
         <p>Volume: <strong>{{ volume }}</strong> Mb</p>
     </div>
 </template>
@@ -14,13 +15,15 @@ export default {
 
   data: () => ({
     count: 0,
-    volume: 0
+    volume: 0,
+    elements: 0
   }),
 
   async created () {
-    const { count, volume } = await getStatisticsData()
+    const { count, volume, elements } = await getStatisticsData()
     this.count = count
     this.volume = volume
+    this.elements = elements
   }
 }
 </script>

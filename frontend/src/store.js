@@ -1,35 +1,41 @@
 const moment = require('moment');
 const axios = require('axios').default;
+// import config from '../../config';
+const config = {
+    BACKEND_URL: 'http://localhost:3000'
+}
 
 const state = {
     loaded: false,
     count: 0,
     volume: 0,
-    blocksCountGraph: [{x: [], y: []}],
+    elements: 0,
+    pageCountGraph: [{x: [], y: []}],
     volumeGraph: [{x: [], y: []}],
+    elementsCountGraph: [{x: [], y: []}],
 };
 
 const loadState = async () => {
-    const { data } = await axios.get('http://127.0.0.1:3000/statistics');
+    const { data } = await axios.get(`${config.BACKEND_URL}/statistics`);
 
-    const blocksCounts = [];
+    const pageCount = [];
+    const elementsCount = [];
     const volumes = [];
     const labels = [];
 
-    data.map((record) => {
-        const volume = Number((record.volume / 1024 / 1024).toFixed(2));
-
-        state.count += record.count;
-        state.volume += volume;
-
-        blocksCounts.push(record.count);
-        volumes.push(volume);
-
+    data.forEach( record => {
         const date = moment(record.date).format("DD.MM");
+        pageCount.push(record.count);
+        elementsCount.push(record.elements);
+        volumes.push(Math.round(record.volume / 1024 / 1024));
         labels.push(`${date}\n(${record.count})`);
     });
+    state.count = pageCount[pageCount.length-1]
+    state.volume = volumes[volumes.length-1]
+    state.elements = elementsCount[elementsCount.length-1]
 
-    state.blocksCountGraph[0] = { x: labels, y: blocksCounts };
+    state.pageCountGraph[0] = { x: labels, y: pageCount };
+    state.elementsCountGraph[0] = { x: labels, y: elementsCount };
     state.volumeGraph[0] = { x: labels, y: volumes };
 }
 
@@ -44,15 +50,12 @@ const getState = async () => {
 }
 
 export const getStatisticsData = async () => {
-    const {count, volume} = await getState();
-
-    return {count, volume};
+    const {count, volume, elements} = await getState();
+    return {count, volume, elements};
 };
 
 export const getGraphsData = async () => {
-    const {blocksCountGraph, volumeGraph} = await getState();
-
-    return {blocksCountGraph, volumeGraph};
+    return await getState();
 };
 
 export const uploadFile = async (file) => {
@@ -60,7 +63,7 @@ export const uploadFile = async (file) => {
     formData.append('file', file);
 
     try {
-        const response = await axios.post('http://127.0.0.1:3000/statistics', formData);
+        const response = await axios.post(`${config.BACKEND_URL}/statistics`, formData);
         loadState();
 
         return response.data.message;

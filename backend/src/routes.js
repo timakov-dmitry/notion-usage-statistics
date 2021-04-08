@@ -7,11 +7,10 @@ const moment = require('moment')
 router.get('/', async (req, res) => {
   try {
     const rows = await db.getHistory()
-    rows
-      .forEach(record => {
+    rows.forEach(record => {
         record.ts = moment(Date.parse(record.date)).unix()
       })
-      .sort((a, b) => a.ts < b.ts ? -1 : 1)
+    rows.sort((a, b) => a.ts < b.ts ? -1 : 1)
     res.json(rows)
   } catch (e) {
     res.status(500).send({ error: e.message })
